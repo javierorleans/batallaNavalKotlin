@@ -3,6 +3,7 @@ package com.example.batallanaval
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.TextView
@@ -31,10 +32,59 @@ class MainActivity : AppCompatActivity() {
         // inicializa como lista vacia
         buttons = Array(36) { Button(this) } // Inicializa con botones vacíos por ahora. lo que está entre { es una funcion lambda}
 
-        inicializarJuego()
+        if (savedInstanceState == null) {
+            inicializarJuego()
+        } else {
+            reconstruirBotonera()
+        }
 
         restartButton.setOnClickListener {
             inicializarJuego()
+        }
+    }
+
+
+    //para salvar los estados
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("barcosTotales", barcosTotales)
+        outState.putInt("movimientos", movimientos)
+        outState.putInt("aciertos", aciertos)
+        outState.putIntegerArrayList("barcos", ArrayList(shipPositions))
+        //guardar botones deshabilitados
+        val desactivados = ArrayList<Int>()
+        val colores = ArrayList<Int>()
+        for (i in buttons.indices) {
+            if (!buttons[i].isEnabled) desactivados.add(i)
+            val color = (buttons[i].background as? ColorDrawable)?.color ?: Color.TRANSPARENT
+            colores.add(color)
+        }
+        outState.putIntegerArrayList("botonesDesactivados", desactivados)
+        outState.putIntegerArrayList("coloresBotones", colores)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        barcosTotales = savedInstanceState.getInt("barcosTotales")
+        movimientos = savedInstanceState.getInt("movimientos")
+        aciertos = savedInstanceState.getInt("aciertos")
+
+        val barcos = savedInstanceState.getIntegerArrayList("barcos")
+        if (barcos != null) shipPositions = barcos.toSet()
+
+        val desactivados = savedInstanceState.getIntegerArrayList("botonesDesactivados") ?: arrayListOf()
+        val colores = savedInstanceState.getIntegerArrayList("coloresBotones") ?: arrayListOf()
+
+        // Reconstrucción de la grilla con los valores guardados
+        gridLayout.post {
+            for (i in buttons.indices) {
+                val button = buttons[i]
+                val color = colores.getOrElse(i) { Color.TRANSPARENT }
+                button.setBackgroundColor(color)
+                button.isEnabled = i !in desactivados
+            }
+            actualizarEstadisticas()
         }
     }
 
@@ -45,14 +95,18 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun inicializarJuego() {
-        gridLayout.removeAllViews() //borra elementos en el tablero
+    private fun inicializarVariablesDelJuego() {
         shipPositions = generarBarcosAleatorios() //crea nuevo conjunto de barcos aleatorios con sus posiciones
         barcosTotales = shipPositions.size // Tamaño del arreglo creado anteriormente
         movimientos = 0
         aciertos = 0
         actualizarEstadisticas()
         // Aunque la primera vez estan en cero, si reinicio el juego sin llamar a esta fun, no se ven en cero hasta que se pulsa una celda
+    }
+
+
+    private fun crearGrillaConBotones() {
+        gridLayout.removeAllViews() //borra elementos en el tablero
 
         //bucle para crear los 36 botones iniciales
         for (i in buttons.indices) {
@@ -98,6 +152,18 @@ class MainActivity : AppCompatActivity() {
             gridLayout.addView(button) //se muestra boton
         }
     }
+
+
+    private fun inicializarJuego() {
+        inicializarVariablesDelJuego()
+        crearGrillaConBotones()
+    }
+
+
+    private fun reconstruirBotonera() {
+        crearGrillaConBotones()
+    }
+
 
     private fun generarBarcosAleatorios(): Set<Int> {
         val cantidad = (10..15).random() //cant de barcos aleatoria
