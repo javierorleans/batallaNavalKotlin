@@ -44,45 +44,48 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    //para salvar los estados
+    //para salvar los valores y estados
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("barcosTotales", barcosTotales)
         outState.putInt("movimientos", movimientos)
         outState.putInt("aciertos", aciertos)
         outState.putIntegerArrayList("barcos", ArrayList(shipPositions))
-        //guardar botones deshabilitados
-        val desactivados = ArrayList<Int>()
-        val colores = ArrayList<Int>()
+
+        val desactivados = ArrayList<Int>() //crea lista para botones deshabilitados
+        val colores = ArrayList<Int>() //crea lista para color de los botones
+        // inicia bucle para recorrer los botones
         for (i in buttons.indices) {
-            if (!buttons[i].isEnabled) desactivados.add(i)
-            val color = (buttons[i].background as? ColorDrawable)?.color ?: Color.TRANSPARENT
-            colores.add(color)
+            if (!buttons[i].isEnabled) desactivados.add(i) //si esta deshabilitado lo agrega a la lista de deshabilitados
+            val color = (buttons[i].background as? ColorDrawable)?.color ?: Color.TRANSPARENT // guarda el color del boton
+            colores.add(color) // lo agrega a la lista de colores
         }
-        outState.putIntegerArrayList("botonesDesactivados", desactivados)
-        outState.putIntegerArrayList("coloresBotones", colores)
+        outState.putIntegerArrayList("botonesDesactivados", desactivados) //guarda a lista de btns desactivados
+        outState.putIntegerArrayList("coloresBotones", colores) //guarda la lista de colores
     }
 
+    //recuperar valores y estados
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
+        // restaura valores guardados
         barcosTotales = savedInstanceState.getInt("barcosTotales")
         movimientos = savedInstanceState.getInt("movimientos")
         aciertos = savedInstanceState.getInt("aciertos")
 
-        val barcos = savedInstanceState.getIntegerArrayList("barcos")
-        if (barcos != null) shipPositions = barcos.toSet()
+        val barcos = savedInstanceState.getIntegerArrayList("barcos") //obtenemos lista de posiciones de barcos
+        if (barcos != null) shipPositions = barcos.toSet() //si no esta vacia, la convierto en set para ShipPosition
 
-        val desactivados = savedInstanceState.getIntegerArrayList("botonesDesactivados") ?: arrayListOf()
-        val colores = savedInstanceState.getIntegerArrayList("coloresBotones") ?: arrayListOf()
+        val desactivados = savedInstanceState.getIntegerArrayList("botonesDesactivados") ?: arrayListOf() //indices de btns deshabilitados
+        val colores = savedInstanceState.getIntegerArrayList("coloresBotones") ?: arrayListOf() //colores de fondo de cada btn
 
         // Reconstrucción de la grilla con los valores guardados
         gridLayout.post {
-            for (i in buttons.indices) {
-                val button = buttons[i]
-                val color = colores.getOrElse(i) { Color.TRANSPARENT }
-                button.setBackgroundColor(color)
-                button.isEnabled = i !in desactivados
+            for (i in buttons.indices) { //recorro btns
+                val button = buttons[i] //btn en posicion i
+                val color = colores.getOrElse(i) { Color.TRANSPARENT } //obtengo color correspondiente al indice
+                button.setBackgroundColor(color) //asigno color
+                button.isEnabled = i !in desactivados //deshabilita o no el btn dependiendo si el indice esta en "desactivados"
             }
             actualizarEstadisticas()
         }
