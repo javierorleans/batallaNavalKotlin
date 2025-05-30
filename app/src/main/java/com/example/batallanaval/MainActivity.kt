@@ -146,9 +146,15 @@ class MainActivity : AppCompatActivity() {
                 actualizarEstadisticas() // actualizacion de valores de estadisticas
 
                 if (aciertos == barcosTotales) {
-                    EstadisticasLayout.text = "¡Ganaste! Movimientos totales: $movimientos"
+                    // Si se encontraron todos los barcos, se anuncia estadistica
+                    val agua = movimientos - aciertos
+                    EstadisticasLayout.text = "¡Finalizaste! Aciertos: $aciertos | Agua: $agua"
+
+                    // Deshabilitar todos los botones
+                    for (btn in buttons) {
+                        btn.isEnabled = false
+                    }
                 }
-                // Si se encontraron todos los barcos, se anuncia
             }
 
             buttons[i] = button //guardamos en la posicion del array
