@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Batalla Naval</string>
+    <string-array name="opciones_tablero">
+        <item>6x6</item>
+        <item>8x8</item>
+        <item>10x10</item>
+    </string-array>
 </resources>

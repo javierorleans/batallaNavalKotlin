@@ -21,6 +21,11 @@ class MainActivity : AppCompatActivity() {
     private var movimientos = 0
     private var aciertos = 0
 
+    private var filas: Int = 6
+    private var columnas: Int = 6
+    private var totalCeldas: Int = 36
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,12 +33,18 @@ class MainActivity : AppCompatActivity() {
         val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
         title = "Batalla Naval | $nombreUsuario"
 
+        val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
+
         // vinculamos variables con elementos del xml
         EstadisticasLayout = findViewById(R.id.Estadisticas)
         gridLayout = findViewById(R.id.gridLayout)
         restartButton = findViewById(R.id.restartButton)
-        // inicializa como lista vacia
-        buttons = Array(36) { Button(this) } // Inicializa con botones vacíos por ahora. lo que está entre { es una funcion lambda}
+
+        // inicializa como lista
+        filas = tamañoTablero.substringBefore("x").toInt()
+        columnas = tamañoTablero.substringAfter("x").toInt()
+        totalCeldas = filas * columnas
+        buttons = Array(totalCeldas) { Button(this) } // Inicializa con botones vacíos por ahora. lo que está entre { es una funcion lambda}
 
         if (savedInstanceState == null) {
             inicializarJuego()
@@ -58,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         val desactivados = ArrayList<Int>() //crea lista para botones deshabilitados
         val colores = ArrayList<Int>() //crea lista para color de los botones
         // inicia bucle para recorrer los botones
+
         for (i in buttons.indices) {
             if (!buttons[i].isEnabled) desactivados.add(i) //si esta deshabilitado lo agrega a la lista de deshabilitados
             val color = (buttons[i].background as? ColorDrawable)?.color ?: Color.TRANSPARENT // guarda el color del boton
@@ -114,6 +126,7 @@ class MainActivity : AppCompatActivity() {
     private fun crearGrillaConBotones() {
         gridLayout.removeAllViews() //borra elementos en el tablero
 
+        gridLayout.columnCount = columnas
         //bucle para crear los 36 botones iniciales
         for (i in buttons.indices) {
             val button = Button(this) //creo boton
@@ -128,8 +141,8 @@ class MainActivity : AppCompatActivity() {
             params.height = sizePx
             params.setMargins(2, 2, 2, 2)
             //asignamos fila y columnas en función de i
-            val row = i / 6  //en que fila va
-            val col = i % 6  //en que columna va
+            val row = i / columnas  //en que fila va
+            val col = i % columnas  //en que columna va
             params.rowSpec = GridLayout.spec(row)  //establecer la fila
             params.columnSpec = GridLayout.spec(col)  //establecer la columna
             button.layoutParams = params //asigno al boton todos los paramentros
@@ -181,7 +194,7 @@ class MainActivity : AppCompatActivity() {
         val cantidad = (10..15).random() //cant de barcos aleatoria
         val posiciones = mutableSetOf<Int>() //conjunto de indices en una lista mutable. No permite repetidos
         while (posiciones.size < cantidad) {
-            posiciones.add((0 until 36).random()) //until indica que no incluye el 36, si debo incluirlos debe ir (0..36)
+            posiciones.add((0 until totalCeldas).random()) //until indica que no incluye el 36, si debo incluirlos debe ir (0..36)
         } //genero posiciones
         return posiciones //devuelve posiciones generadas
     }
