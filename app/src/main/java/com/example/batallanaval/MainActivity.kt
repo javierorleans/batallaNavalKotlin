@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
+        title = "Batalla Naval | $nombreUsuario"
+
         // vinculamos variables con elementos del xml
         EstadisticasLayout = findViewById(R.id.Estadisticas)
         gridLayout = findViewById(R.id.gridLayout)
