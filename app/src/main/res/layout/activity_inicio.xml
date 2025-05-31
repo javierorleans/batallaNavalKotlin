@@ -17,15 +17,27 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         android:hint="Ingresá tu nombre"
         android:inputType="textPersonName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="8dp"
+        android:text="Elegí el tamaño de tu tablero!"
+        android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/spinner_tablero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="24dp"
         android:entries="@array/opciones_tablero" />
 
     <Button

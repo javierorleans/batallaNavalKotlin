@@ -14,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat
 class InicioActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Oculta el ActionBar solo en esta activity
+        supportActionBar?.hide()
         setContentView(R.layout.activity_inicio)
 
         val btn_ingresar = findViewById<Button>(R.id.btn_ingresar);
@@ -23,8 +25,15 @@ class InicioActivity : AppCompatActivity() {
         val spinner = findViewById<Spinner>(R.id.spinner_tablero)
 
         btn_ingresar.setOnClickListener {
-            val nombreUsuario = nombreInput.text.toString()
+            val nombreUsuario = nombreInput.text.toString().trim()
+
+            if (nombreUsuario.isEmpty()) {
+                nombreInput.error = "Por favor, ingresá tu nombre"
+                return@setOnClickListener
+            }
+
             val opcionSeleccionada = spinner.selectedItem.toString()
+
             val i = Intent(this, MainActivity::class.java)
             i.putExtra("nombre_usuario", nombreUsuario)
             i.putExtra("tamaño_tablero", opcionSeleccionada)
