@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun crearGrillaConBotones() {
         gridLayout.removeAllViews() //borra elementos en el tablero
-
+        gridLayout.rowCount = filas
         gridLayout.columnCount = columnas
         //bucle para crear los 36 botones iniciales
         for (i in buttons.indices) {
@@ -136,15 +136,21 @@ class MainActivity : AppCompatActivity() {
             val sizePx = cmToPx(1f) // le doy tamaño
 
             //diseño del boton
-            val params = GridLayout.LayoutParams()
-            params.width = sizePx
-            params.height = sizePx
+            // Configuro que el ancho de la grilla se adapte al ancho de la pantalla, tanto vertical como horizontal
+            // Ya no se ven cuadrados los botones, sino rectangulares. evitamos usar HorizontalScrollView
+            val params = GridLayout.LayoutParams().apply{
+                width = 0
+                height = GridLayout.LayoutParams.WRAP_CONTENT
+                columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+            }
+
             params.setMargins(2, 2, 2, 2)
+
             //asignamos fila y columnas en función de i
             val row = i / columnas  //en que fila va
             val col = i % columnas  //en que columna va
             params.rowSpec = GridLayout.spec(row)  //establecer la fila
-            params.columnSpec = GridLayout.spec(col)  //establecer la columna
+            params.columnSpec = GridLayout.spec(col, 1f)  //establecer la columna: 1f: ocupá 1 columna y repartí equitativamente el espacio
             button.layoutParams = params //asigno al boton todos los paramentros
 
 
