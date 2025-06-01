@@ -5,4 +5,8 @@
         <item>8x8</item>
         <item>10x10</item>
     </string-array>
+    <string name="textoAyuda">Batalla Naval es un juego por turnos donde el jugador debe encontrar y hundir barcos
+escondidos en un tablero. Cada turno consiste en seleccionar una celda. Si acierta, se
+marca como “tocado”; si no, como “agua”. El objetivo es hundir todos los barcos en la menor
+cantidad de intentos posibles.</string>
 </resources>

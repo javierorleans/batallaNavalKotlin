@@ -1,5 +1,6 @@
 package com.example.batallanaval
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val btn_menuPrincipal = findViewById<Button>(R.id.btn_menuPrincipal)
+        val enlace_ayuda = findViewById<TextView>(R.id.ayuda_text);
+
         val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
         title = "Batalla Naval | $nombreUsuario"
 
@@ -54,6 +58,15 @@ class MainActivity : AppCompatActivity() {
 
         restartButton.setOnClickListener {
             inicializarJuego()
+        }
+
+        btn_menuPrincipal.setOnClickListener{
+            this.finish()
+        }
+
+        enlace_ayuda.setOnClickListener {
+            val i = Intent(this, AyudaActivity::class.java)
+            startActivity(i)
         }
     }
 
