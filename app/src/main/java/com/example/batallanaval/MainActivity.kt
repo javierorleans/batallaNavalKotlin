@@ -8,6 +8,9 @@ import android.graphics.drawable.ColorDrawable
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.TextView
+import android.widget.PopupMenu
+import android.view.MenuItem
+import android.view.View
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,8 +34,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btn_menuPrincipal = findViewById<Button>(R.id.btn_menuPrincipal)
-        val enlace_ayuda = findViewById<TextView>(R.id.ayuda_text);
+        val btnMenu = findViewById<Button>(R.id.btnMenu)
+
+        btnMenu.setOnClickListener { view ->
+            showPopupMenu(view)
+        }
+
 
         val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
         title = "Batalla Naval | $nombreUsuario"
@@ -60,14 +67,6 @@ class MainActivity : AppCompatActivity() {
             inicializarJuego()
         }
 
-        btn_menuPrincipal.setOnClickListener{
-            this.finish()
-        }
-
-        enlace_ayuda.setOnClickListener {
-            val i = Intent(this, AyudaActivity::class.java)
-            startActivity(i)
-        }
     }
 
 
@@ -220,5 +219,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun actualizarEstadisticas(){
         EstadisticasLayout.text = "Movimientos: $movimientos | Aciertos: $aciertos | Restantes: ${barcosTotales - aciertos}"
+    }
+
+    private fun showPopupMenu(view: View) {
+        val popup = PopupMenu(this, view)
+        popup.menuInflater.inflate(R.menu.menu_main, popup.menu)
+
+        popup.setOnMenuItemClickListener { item: MenuItem ->
+            when (item.itemId) {
+                R.id.menu_inicio -> {
+                    val intent = Intent(this, InicioActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.menu_ayuda -> {
+                    val intent = Intent(this, AyudaActivity::class.java)
+                    intent.putExtra("origen", "Main") // para saber de dónde vino
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popup.show()
     }
 }

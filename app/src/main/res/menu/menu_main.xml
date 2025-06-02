@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_inicio"
+        android:title="Ir a Inicio" />
+    <item
+        android:id="@+id/menu_ayuda"
+        android:title="Ir a Ayuda" />
+</menu>
