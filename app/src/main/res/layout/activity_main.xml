@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Movimientos: 0 | Aciertos: 0 | Restantes: 0"
+            android:text="@string/estadisticas_texto"
             android:textSize="18sp"
             android:layout_marginTop="12dp"/>
 
@@ -38,14 +38,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Menú" />
+            android:text="@string/menu" />
 
         <Button
             android:id="@+id/restartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Reiniciar juego"
+            android:text="@string/btn_reiniciarJuego"
             android:layout_marginTop="16dp" />
 
 

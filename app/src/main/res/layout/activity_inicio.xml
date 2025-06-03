@@ -18,7 +18,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        android:hint="Ingresá tu nombre"
+        android:hint="@string/placeholder_inicio"
         android:inputType="textPersonName" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginEnd="26dp"
         android:layout_marginTop="8dp"
-        android:text="Elegí el tamaño de tu tablero!"
+        android:text="@string/titulo_spinner"
         android:textSize="18sp" />
 
     <Spinner
@@ -44,13 +44,13 @@
         android:id="@+id/btn_ingresar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="INGRESAR"/>
+        android:text="@string/btn_ingresarJuego"/>
 
     <TextView
         android:id="@+id/ayuda_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ayuda"
+        android:text="@string/enlace_ayuda"
         android:textColor="@android:color/holo_blue_dark"
         android:textStyle="normal"
         android:textSize="16sp"

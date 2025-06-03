@@ -1,12 +1,24 @@
 <resources>
     <string name="app_name">Batalla Naval</string>
+    <string name="placeholder_inicio">Ingresá tu nombre</string>
+    <string name="titulo_spinner">¡Elegí el tamaño de tu tablero!</string>
     <string-array name="opciones_tablero">
         <item>6x6</item>
         <item>8x8</item>
         <item>10x10</item>
     </string-array>
+    <string name="btn_ingresarJuego">INGRESAR</string>
+    <string name="enlace_ayuda">Ayuda</string>
+
+    <string name="estadisticas_texto">Movimientos: %1$d | Aciertos: %2$d | Restantes: %3$d</string>
+    <string name="mensaje_final">¡Finalizaste! Aciertos: %1$d | Agua: %2$d</string>
+    <string name="menu">Menu</string>
+    <string name="btn_reiniciarJuego">Reiniciar Juego</string>
+
+    <string name="tit_ayuda">AYUDA</string>
     <string name="textoAyuda">Batalla Naval es un juego por turnos donde el jugador debe encontrar y hundir barcos
-escondidos en un tablero. Cada turno consiste en seleccionar una celda. Si acierta, se
-marca como “tocado”; si no, como “agua”. El objetivo es hundir todos los barcos en la menor
-cantidad de intentos posibles.</string>
+        escondidos en un tablero. Cada turno consiste en seleccionar una celda. Si acierta, se
+        marca como “tocado”; si no, como “agua”. El objetivo es hundir todos los barcos en la menor
+        cantidad de intentos posibles.</string>
+    <string name="volver">VOLVER</string>
 </resources>

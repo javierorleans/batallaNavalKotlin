@@ -182,7 +182,9 @@ class MainActivity : AppCompatActivity() {
                 if (aciertos == barcosTotales) {
                     // Si se encontraron todos los barcos, se anuncia estadistica
                     val agua = movimientos - aciertos
-                    EstadisticasLayout.text = "¡Finalizaste! Aciertos: $aciertos | Agua: $agua"
+
+                    val mensajeFinal = getString(R.string.mensaje_final, aciertos, agua)
+                    EstadisticasLayout.text = mensajeFinal
 
                     // Deshabilitar todos los botones
                     for (btn in buttons) {
@@ -218,7 +220,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun actualizarEstadisticas(){
-        EstadisticasLayout.text = "Movimientos: $movimientos | Aciertos: $aciertos | Restantes: ${barcosTotales - aciertos}"
+        val texto = getString(R.string.estadisticas_texto, movimientos, aciertos, barcosTotales - aciertos)
+        EstadisticasLayout.text = texto
     }
 
     private fun showPopupMenu(view: View) {
