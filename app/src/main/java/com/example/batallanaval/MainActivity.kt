@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var movimientos = 0
     private var aciertos = 0
 
+    // Variables para crear el tablero, por defecto de 6x6
     private var filas: Int = 6
     private var columnas: Int = 6
     private var totalCeldas: Int = 36
@@ -41,9 +42,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        // obtiene lo igresado en el input y lo agrega al navbar
         val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
         title = "Batalla Naval | $nombreUsuario"
 
+        // obtiene la opcion elegida en el spinner
         val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
 
         // vinculamos variables con elementos del xml
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         gridLayout = findViewById(R.id.gridLayout)
         restartButton = findViewById(R.id.restartButton)
 
-        // inicializa como lista
+        // convierte en int lo ingresado en el spinner
         filas = tamañoTablero.substringBefore("x").toInt()
         columnas = tamañoTablero.substringAfter("x").toInt()
         totalCeldas = filas * columnas
@@ -81,7 +84,6 @@ class MainActivity : AppCompatActivity() {
         val desactivados = ArrayList<Int>() //crea lista para botones deshabilitados
         val colores = ArrayList<Int>() //crea lista para color de los botones
         // inicia bucle para recorrer los botones
-
         for (i in buttons.indices) {
             if (!buttons[i].isEnabled) desactivados.add(i) //si esta deshabilitado lo agrega a la lista de deshabilitados
             val color = (buttons[i].background as? ColorDrawable)?.color ?: Color.TRANSPARENT // guarda el color del boton
@@ -139,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         gridLayout.removeAllViews() //borra elementos en el tablero
         gridLayout.rowCount = filas
         gridLayout.columnCount = columnas
-        //bucle para crear los 36 botones iniciales
+        //bucle para crear los botones iniciales
         for (i in buttons.indices) {
             val button = Button(this) //creo boton
             button.text = ""
@@ -158,7 +160,7 @@ class MainActivity : AppCompatActivity() {
 
             params.setMargins(2, 2, 2, 2)
 
-            //asignamos fila y columnas en función de i
+            //asignamos fila y columna al boton en función de i
             val row = i / columnas  //en que fila va
             val col = i % columnas  //en que columna va
             params.rowSpec = GridLayout.spec(row)  //establecer la fila
