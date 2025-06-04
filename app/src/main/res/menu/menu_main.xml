@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_inicio"
-        android:title="Ir a Inicio" />
+        android:title="@string/ir_inicio" />
     <item
         android:id="@+id/menu_ayuda"
-        android:title="Ir a Ayuda" />
+        android:title="@string/ir_ayuda" />
 </menu>

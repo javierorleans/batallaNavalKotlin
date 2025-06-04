@@ -7,9 +7,11 @@
     <string name="mensaje_final">You finished! Hits: %1$d | Misses: %2$d</string>
     <string name="menu">Menu</string>
     <string name="btn_reiniciarJuego">Restart Game</string>
+    <string name="ir_ayuda">Go to Help</string>
     <string name="tit_ayuda">HELP</string>
     <string name="textoAyuda">Battleship is a turn-based game where the player must find and sink ships hidden on a board. Each turn consists of selecting a cell. If it\'s a hit, it is marked as \"hit\"; if not, as \"miss\". The objective is to sink all the ships in as few attempts as possible.</string>
     <string name="volver">BACK</string>
     <string name="estadisticas_texto">Moves: %1$d | Hits: %2$d | Remaining: %3$d</string>
     <string name="titulo_spinner">Choose your board size!</string>
+    <string name="ir_inicio">Go to Home</string>
 </resources>
