@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
 
         // obtiene lo igresado en el input y lo agrega al navbar
         val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
-        title = "Batalla Naval | $nombreUsuario"
+
+        title = "${getString(R.string.app_name)} | $nombreUsuario"
 
         // obtiene la opcion elegida en el spinner
         val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
