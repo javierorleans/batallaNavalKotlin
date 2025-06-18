@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,6 +25,8 @@ class InicioActivity : AppCompatActivity() {
         val nombreInput = findViewById<EditText>(R.id.input_usuario)
         val spinner = findViewById<Spinner>(R.id.spinner_tablero)
 
+
+
         btn_ingresar.setOnClickListener {
             val nombreUsuario = nombreInput.text.toString().trim()
 
@@ -33,6 +36,7 @@ class InicioActivity : AppCompatActivity() {
             }
 
             val opcionSeleccionada = spinner.selectedItem.toString()
+
 
             val i = Intent(this, MainActivity::class.java)
             i.putExtra("nombre_usuario", nombreUsuario)

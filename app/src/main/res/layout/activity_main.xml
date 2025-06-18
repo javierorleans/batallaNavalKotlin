@@ -33,6 +33,15 @@
             android:useDefaultMargins="true"
             />
 
+        <TextView
+            android:id="@+id/timer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="00"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
         <Button
             android:id="@+id/btnMenu"
             android:layout_width="wrap_content"

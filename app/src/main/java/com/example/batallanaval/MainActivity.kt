@@ -1,10 +1,12 @@
 package com.example.batallanaval
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.TextView
@@ -30,6 +32,10 @@ class MainActivity : AppCompatActivity() {
     private var columnas: Int = 6
     private var totalCeldas: Int = 36
 
+    //Variables para crear el temporizador
+    private lateinit var countDownTimer: CountDownTimer
+    private var tiempoRestante: Long = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +55,8 @@ class MainActivity : AppCompatActivity() {
 
         // obtiene la opcion elegida en el spinner
         val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
+        tiempoRestante = obtenerDuracionTimer(tamañoTablero)
+        iniciarTemporizador()
 
         // vinculamos variables con elementos del xml
         EstadisticasLayout = findViewById(R.id.Estadisticas)
@@ -250,4 +258,47 @@ class MainActivity : AppCompatActivity() {
 
         popup.show()
     }
+
+    private fun obtenerDuracionTimer(tamanio: String): Long {
+        return when (tamanio) {
+            "6x6" -> 20_000L // 20 segundos
+            "8x8" -> 25_000L // 25 segundos
+            "10x10" -> 30_000L // 30 segundos
+            else -> 20_000L // por defecto
+        }
+    }
+
+    private fun iniciarTemporizador() {
+        countDownTimer = object : CountDownTimer(tiempoRestante, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                tiempoRestante = millisUntilFinished
+                actualizarVistaTimer()
+            }
+
+            override fun onFinish() {
+                mostrarDialogoTiempoAgotado()
+            }
+        }.start()
+    }
+
+    private fun actualizarVistaTimer() {
+        val segundos = tiempoRestante / 1000
+        val timerText = findViewById<TextView>(R.id.timer_text)
+        timerText.text = "⏱ $segundos s"
+    }
+
+    private fun mostrarDialogoTiempoAgotado() {
+        AlertDialog.Builder(this)
+            .setTitle("⏳ Tiempo agotado")
+            .setMessage("¡Has perdido la partida!")
+            .setPositiveButton("Jugar nuevamente") { _, _ ->
+                recreate()
+            }
+            .setNegativeButton("Volver al inicio") { _, _ ->
+                finish() // o startActivity(Intent(this, InicioActivity::class.java))
+            }
+            .setCancelable(false)
+            .show()
+    }
+
 }
