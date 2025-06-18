@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Batalla Naval</string>
     <string name="placeholder_inicio">Ingresá tu nombre</string>
+    <string name="nombre_obligatorio">Por favor, ingresá tu nombre</string>
     <string name="titulo_spinner">¡Elegí el tamaño de tu tablero!</string>
     <string-array name="opciones_tablero">
         <item>6x6</item>

@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Battleship</string>
     <string name="placeholder_inicio">Type your name</string>
+    <string name="nombre_obligatorio">Please, type your name</string>
     <string name="btn_ingresarJuego">ENTER</string>
     <string name="enlace_ayuda">Help</string>
     <string name="mensaje_final">You finished! Hits: %1$d | Misses: %2$d</string>

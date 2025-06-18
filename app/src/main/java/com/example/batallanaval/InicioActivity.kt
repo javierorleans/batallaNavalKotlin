@@ -28,7 +28,7 @@ class InicioActivity : AppCompatActivity() {
             val nombreUsuario = nombreInput.text.toString().trim()
 
             if (nombreUsuario.isEmpty()) {
-                nombreInput.error = "Por favor, ingresá tu nombre"
+                nombreInput.error = getString(R.string.nombre_obligatorio)
                 return@setOnClickListener
             }
 
