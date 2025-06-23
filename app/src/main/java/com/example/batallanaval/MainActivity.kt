@@ -76,7 +76,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         restartButton.setOnClickListener {
-            inicializarJuego()
+            val intent = intent
+            finish()
+            startActivity(intent)
+            //recreate()
+            //inicializarJuego()
         }
 
     }
@@ -194,7 +198,7 @@ class MainActivity : AppCompatActivity() {
                     
 
 
-                    /*// Si se encontraron todos los barcos, se anuncia estadistica
+                    // Si se encontraron todos los barcos, se anuncia estadistica
                     val agua = movimientos - aciertos
 
                     val mensajeFinal = getString(R.string.mensaje_final, aciertos, agua)
@@ -203,7 +207,7 @@ class MainActivity : AppCompatActivity() {
                     // Deshabilitar todos los botones
                     for (btn in buttons) {
                         btn.isEnabled = false
-                    }*/
+                    }
                 }
             }
 
@@ -245,15 +249,13 @@ class MainActivity : AppCompatActivity() {
         popup.setOnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.menu_inicio -> {
-
-                    val intent = Intent(this, InicioActivity::class.java)
-                    /* Si InicioActivity ya está en la pila de Activities, destruye todas las activities por encima y la lleva al frente.
-                    *  Si no está en la pila, se crea una nueva.
-                    *  El FLAG_ACTIVITY_SINGLE_TOP evita que se vuelva a crear si ya está al frente.
-                    * */
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    startActivity(intent)
+                    this.finish()
                     true
+                    /* También se puede usar: intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    * Si InicioActivity ya está en la pila de Activities, destruye todas las activities por encima y la lleva al frente.
+                    *  Si no está en la pila, se crea una nueva.
+                    *  El FLAG_ACTIVITY_SINGLE_TOP evita que se vuelva a crear si ya está al frente.*/
+
                 }
                 R.id.menu_ayuda -> {
                     val intent = Intent(this, AyudaActivity::class.java)
@@ -264,7 +266,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
         popup.show()
     }
 
