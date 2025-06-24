@@ -75,10 +75,13 @@ class MainActivity : AppCompatActivity() {
             reconstruirBotonera()
         }
 
+        //boton de reiniciar partida
         restartButton.setOnClickListener {
-            inicializarJuego()
+            inicializarJuego() //reinicia todas las variables necesarias dela grilla
+
             val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
             tiempoRestante = obtenerDuracionTimer(tamañoTablero)
+
             iniciarTemporizador()
         }
 
@@ -314,6 +317,14 @@ class MainActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
+    }
+
+    // destruye el temporizador cuando salimos de la activity
+    override fun onDestroy() {
+        if (::temporizador.isInitialized) {
+            temporizador.cancel()
+        }
+        super.onDestroy()
     }
 
 }
