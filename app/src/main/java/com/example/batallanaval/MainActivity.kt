@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         title = "${getString(R.string.app_name)} | $nombreUsuario"
 
-        // obtiene la opcion elegida en el spinner
+        // obtiene la opcion elegida en el spinner e inicializa el contador
         val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
         tiempoRestante = obtenerDuracionTimer(tamañoTablero)
         iniciarTemporizador()
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         gridLayout = findViewById(R.id.gridLayout)
         restartButton = findViewById(R.id.restartButton)
 
-        // convierte en int lo ingresado en el spinner
+        // convierte en int lo ingresado en el spinner para armar tablero
         filas = tamañoTablero.substringBefore("x").toInt()
         columnas = tamañoTablero.substringAfter("x").toInt()
         totalCeldas = filas * columnas
@@ -76,11 +76,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         restartButton.setOnClickListener {
-            val intent = intent
-            finish()
-            startActivity(intent)
-            //recreate()
-            //inicializarJuego()
+            inicializarJuego()
+            val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
+            tiempoRestante = obtenerDuracionTimer(tamañoTablero)
+            iniciarTemporizador()
         }
 
     }
@@ -279,6 +278,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun iniciarTemporizador() {
+        // Cancela el temporizador actual si ya existe y está corriendo
+        if (::temporizador.isInitialized) {
+            temporizador.cancel()
+        }
+
         temporizador = object : CountDownTimer(tiempoRestante, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 tiempoRestante = millisUntilFinished
@@ -302,6 +306,7 @@ class MainActivity : AppCompatActivity() {
             .setTitle("⏳ Tiempo agotado")
             .setMessage("¡Has perdido la partida!")
             .setPositiveButton("Jugar nuevamente") { _, _ ->
+                inicializarJuego()
                 recreate()
             }
             .setNegativeButton("Volver al inicio") { _, _ ->
