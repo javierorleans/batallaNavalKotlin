@@ -13,6 +13,9 @@
         android:theme="@style/Theme.BatallaNaval"
         tools:targetApi="31">
         <activity
+            android:name=".RankingActivity"
+            android:exported="false" />
+        <activity
             android:name=".AyudaActivity"
             android:exported="false" />
         <activity

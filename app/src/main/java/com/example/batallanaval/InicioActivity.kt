@@ -20,6 +20,7 @@ class InicioActivity : AppCompatActivity() {
         setContentView(R.layout.activity_inicio)
 
         val btn_ingresar = findViewById<Button>(R.id.btn_ingresar);
+        val btn_ranking = findViewById<Button>(R.id.btn_ranking);
         val enlace_ayuda = findViewById<TextView>(R.id.ayuda_text);
 
         val nombreInput = findViewById<EditText>(R.id.input_usuario)
@@ -41,6 +42,11 @@ class InicioActivity : AppCompatActivity() {
             val i = Intent(this, MainActivity::class.java)
             i.putExtra("nombre_usuario", nombreUsuario)
             i.putExtra("tamaño_tablero", opcionSeleccionada)
+            startActivity(i)
+        }
+
+        btn_ranking.setOnClickListener {
+            val i = Intent(this, RankingActivity::class.java)
             startActivity(i)
         }
 

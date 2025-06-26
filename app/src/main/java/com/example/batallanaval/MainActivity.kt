@@ -13,6 +13,8 @@ import android.widget.TextView
 import android.widget.PopupMenu
 import android.view.MenuItem
 import android.view.View
+import java.io.File
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var temporizador: CountDownTimer
     private var tiempoRestante: Long = 0
 
+    private lateinit var nombreUsuario: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +53,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // obtiene lo igresado en el input y lo agrega al navbar
-        val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
-
+        nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "Invitado"
         title = "${getString(R.string.app_name)} | $nombreUsuario"
 
         // obtiene la opcion elegida en el spinner e inicializa el contador
@@ -156,6 +159,7 @@ class MainActivity : AppCompatActivity() {
         gridLayout.removeAllViews() //borra elementos en el tablero
         gridLayout.rowCount = filas
         gridLayout.columnCount = columnas
+
         //bucle para crear los botones iniciales
         for (i in buttons.indices) {
             val button = Button(this) //creo boton
@@ -197,19 +201,16 @@ class MainActivity : AppCompatActivity() {
                 actualizarEstadisticas() // actualizacion de valores de estadisticas
 
                 if (aciertos == barcosTotales) {
-                    
-
-
                     // Si se encontraron todos los barcos, se anuncia estadistica
-                    val agua = movimientos - aciertos
-
-                    val mensajeFinal = getString(R.string.mensaje_final, aciertos, agua)
-                    EstadisticasLayout.text = mensajeFinal
+                    //val agua = movimientos - aciertos
+                    // val mensajeFinal = getString(R.string.mensaje_final, aciertos, agua)
+                    //EstadisticasLayout.text = mensajeFinal
 
                     // Deshabilitar todos los botones
                     for (btn in buttons) {
                         btn.isEnabled = false
                     }
+                    mostrarDialogoVictoria()
                 }
             }
 
@@ -273,7 +274,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun obtenerDuracionTimer(tamanio: String): Long {
         return when (tamanio) {
-            "6x6" -> 20_000L // 20 segundos
+            "6x6" -> 90_000L // 20 segundos CAMBIAR!
             "8x8" -> 25_000L // 25 segundos
             "10x10" -> 30_000L // 30 segundos
             else -> 20_000L // por defecto
@@ -281,7 +282,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun iniciarTemporizador() {
-        // Cancela el temporizador actual si ya existe y está corriendo
+        // cancela el temporizador actual si ya existe y está corriendo
         if (::temporizador.isInitialized) {
             temporizador.cancel()
         }
@@ -318,6 +319,65 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .show()
     }
+
+    private fun mostrarDialogoVictoria() {
+        if (::temporizador.isInitialized) {
+            temporizador.cancel() // detener temporizador
+        }
+
+        val puntaje = calcularPuntaje()
+        val entro = agregarYVerificarSiEntro(nombreUsuario, puntaje)
+
+        val mensaje = if (entro) {
+            "🎉 ¡$nombreUsuario entró al ranking con $puntaje puntos!"
+        } else {
+            "$nombreUsuario ganó con $puntaje puntos, pero no entró al top 5."
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("🚢 ¡Partida ganada!")
+            .setMessage(mensaje)
+            .setPositiveButton("Ver Ranking") { _, _ ->
+                startActivity(Intent(this, RankingActivity::class.java))
+            }
+            .setNegativeButton("Volver al inicio") { _, _ ->
+                finish()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun calcularPuntaje(): Int {
+        return if (movimientos == 0) 0 else ((aciertos.toDouble() / movimientos) * 100).toInt()
+    }
+
+    private fun agregarYVerificarSiEntro(nombre: String, puntaje: Int): Boolean {
+        val archivo = File(filesDir, "ranking.txt")
+        val ranking = mutableListOf<Pair<String, Int>>()
+
+        if (archivo.exists()) {
+            archivo.readLines().forEach {
+                val partes = it.split("::")
+                if (partes.size == 2) {
+                    ranking.add(Pair(partes[0], partes[1].toIntOrNull() ?: 0))
+                }
+            }
+        }
+
+        ranking.add(Pair(nombre, puntaje))
+        val top5 = ranking.sortedByDescending { it.second }.take(5)
+
+        val nuevoRankingTexto = top5.joinToString("\n") { "${it.first}::${it.second}" }
+
+        try {
+            archivo.writeText(nuevoRankingTexto)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return top5.any { it.first == nombre && it.second == puntaje }
+    }
+
 
     // destruye el temporizador cuando salimos de la activity
     override fun onDestroy() {

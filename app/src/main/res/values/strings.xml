@@ -9,6 +9,7 @@
         <item>10x10</item>
     </string-array>
     <string name="btn_ingresarJuego">INGRESAR</string>
+    <string name="btn_ranking">VER RANKING</string>
     <string name="enlace_ayuda">Ayuda</string>
 
     <string name="estadisticas_texto">Movimientos: %1$d | Aciertos: %2$d | Restantes: %3$d</string>
@@ -25,4 +26,9 @@
         marca como “tocado”; si no, como “agua”. El objetivo es hundir todos los barcos en la menor
         cantidad de intentos posibles.</string>
     <string name="volver">VOLVER</string>
+
+    <string name="no_jugadores_ranking">No hay jugadores disponibles</string>
+    <string name="no_ranking_disponible">No hay ranking disponible</string>
+    <string name="puntos">puntos</string>
+    <string name="btn_volverInicio">VOLVER A INICIO</string>
 </resources>

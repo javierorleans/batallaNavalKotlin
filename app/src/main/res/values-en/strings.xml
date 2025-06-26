@@ -15,4 +15,9 @@
     <string name="estadisticas_texto">Moves: %1$d | Hits: %2$d | Remaining: %3$d</string>
     <string name="titulo_spinner">Choose your board size!</string>
     <string name="ir_inicio">Go to Home</string>
+    <string name="btn_ranking">SHOW RANKING</string>
+    <string name="puntos">points</string>
+    <string name="btn_volverInicio">BACK TO HOME</string>
+    <string name="no_jugadores_ranking">No players available</string>
+    <string name="no_ranking_disponible">Ranking not available</string>
 </resources>
