@@ -1,3 +1,4 @@
+
 <resources>
     <string name="app_name">Batalla Naval</string>
     <string name="placeholder_inicio">Ingresá tu nombre</string>
@@ -21,14 +22,23 @@
     <string name="ir_ayuda">Ir a Ayuda</string>
 
     <string name="tit_ayuda">AYUDA</string>
-    <string name="textoAyuda">Batalla Naval es un juego por turnos donde el jugador debe encontrar y hundir barcos
-        escondidos en un tablero. Cada turno consiste en seleccionar una celda. Si acierta, se
-        marca como “tocado”; si no, como “agua”. El objetivo es hundir todos los barcos en la menor
-        cantidad de intentos posibles.</string>
+    <string name="textoAyuda">Batalla Naval es un juego por turnos donde el jugador debe encontrar y hundir barcos escondidos en un tablero. Cada turno consiste en seleccionar una celda. Si acierta, se marca como “tocado”; si no, como “agua”. El objetivo es hundir todos los barcos en la menor cantidad de intentos posibles.</string>
     <string name="volver">VOLVER</string>
-
+    
+    <string name="mensaje_entro_ranking">🎉 ¡%1$s entró al ranking con %2$d puntos!</string>
+    <string name="mensaje_no_entro_ranking">%1$s ganó con %2$d puntos, pero no entró al top 5.</string>
     <string name="no_jugadores_ranking">No hay jugadores disponibles</string>
     <string name="no_ranking_disponible">No hay ranking disponible</string>
+    <string name="ver_ranking">Ver Ranking</string>
+    <string name="volver_inicio">Volver al inicio</string>
+
     <string name="puntos">puntos</string>
     <string name="btn_volverInicio">VOLVER A INICIO</string>
+    <string name="dialog_titulo">🚢 ¡Partida ganada!</string>
+
+    <string name="dialog_tiempo_agotado_title">⏳ Tiempo agotado</string>
+    <string name="dialog_tiempo_agotado_message">¡Has perdido la partida!</string>
+    <string name="jugar_nuevamente">Jugar nuevamente</string>
+
+
 </resources>

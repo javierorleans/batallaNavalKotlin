@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun inicializarVariablesDelJuego() {
+    private fun  inicializarVariablesDelJuego() {
         shipPositions = generarBarcosAleatorios() //crea nuevo conjunto de barcos aleatorios con sus posiciones
         barcosTotales = shipPositions.size // Tamaño del arreglo creado anteriormente
         movimientos = 0
@@ -307,13 +307,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun mostrarDialogoTiempoAgotado() {
         AlertDialog.Builder(this)
-            .setTitle("⏳ Tiempo agotado")
-            .setMessage("¡Has perdido la partida!")
-            .setPositiveButton("Jugar nuevamente") { _, _ ->
+            .setTitle(getString(R.string.dialog_tiempo_agotado_title))
+            .setMessage(getString(R.string.dialog_tiempo_agotado_message))
+            .setPositiveButton(getString(R.string.jugar_nuevamente)) { _, _ ->
                 inicializarJuego()
                 recreate()
             }
-            .setNegativeButton("Volver al inicio") { _, _ ->
+            .setNegativeButton(getString(R.string.volver_inicio)) { _, _ ->
                 finish() // o startActivity(Intent(this, InicioActivity::class.java))
             }
             .setCancelable(false)
@@ -329,18 +329,20 @@ class MainActivity : AppCompatActivity() {
         val entro = agregarYVerificarSiEntro(nombreUsuario, puntaje)
 
         val mensaje = if (entro) {
-            "🎉 ¡$nombreUsuario entró al ranking con $puntaje puntos!"
+            getString(R.string.mensaje_entro_ranking, nombreUsuario, puntaje)
+            //"🎉 ¡$nombreUsuario entró al ranking con $puntaje puntos!"
         } else {
-            "$nombreUsuario ganó con $puntaje puntos, pero no entró al top 5."
+            getString(R.string.mensaje_no_entro_ranking, nombreUsuario, puntaje)
+            //"$nombreUsuario ganó con $puntaje puntos, pero no entró al top 5."
         }
 
         AlertDialog.Builder(this)
-            .setTitle("🚢 ¡Partida ganada!")
+            .setTitle(getString(R.string.dialog_titulo))
             .setMessage(mensaje)
-            .setPositiveButton("Ver Ranking") { _, _ ->
+            .setPositiveButton(getString(R.string.ver_ranking)) { _, _ ->
                 startActivity(Intent(this, RankingActivity::class.java))
             }
-            .setNegativeButton("Volver al inicio") { _, _ ->
+            .setNegativeButton(getString(R.string.volver_inicio)) { _, _ ->
                 finish()
             }
             .setCancelable(false)
