@@ -80,12 +80,13 @@ class MainActivity : AppCompatActivity() {
 
         //boton de reiniciar partida
         restartButton.setOnClickListener {
-            inicializarJuego() //reinicia todas las variables necesarias dela grilla
+            reiniciar()
+            /*inicializarJuego() //reinicia todas las variables necesarias dela grilla
 
             val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
             tiempoRestante = obtenerDuracionTimer(tamañoTablero)
 
-            iniciarTemporizador()
+            iniciarTemporizador()*/
         }
 
     }
@@ -272,10 +273,19 @@ class MainActivity : AppCompatActivity() {
         popup.show()
     }
 
+    // Funcion que va a ser llamada por el botón de Reiniciar como en Volver a Jugar del AlertDialog de fin de juego
+    private fun reiniciar(){
+        inicializarJuego() //reinicia todas las variables necesarias dela grilla
+
+        val tamañoTablero = intent.getStringExtra("tamaño_tablero") ?: "6x6"
+        tiempoRestante = obtenerDuracionTimer(tamañoTablero)
+
+        iniciarTemporizador()
+    }
     private fun obtenerDuracionTimer(tamanio: String): Long {
         return when (tamanio) {
             "6x6" -> 90_000L // 20 segundos CAMBIAR!
-            "8x8" -> 25_000L // 25 segundos
+            "8x8" -> 55_000L // 25 segundos CAMBIAR!
             "10x10" -> 30_000L // 30 segundos
             else -> 20_000L // por defecto
         }
@@ -330,23 +340,36 @@ class MainActivity : AppCompatActivity() {
 
         val mensaje = if (entro) {
             getString(R.string.mensaje_entro_ranking, nombreUsuario, puntaje)
-            //"🎉 ¡$nombreUsuario entró al ranking con $puntaje puntos!"
         } else {
             getString(R.string.mensaje_no_entro_ranking, nombreUsuario, puntaje)
-            //"$nombreUsuario ganó con $puntaje puntos, pero no entró al top 5."
         }
 
-        AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_titulo))
             .setMessage(mensaje)
-            .setPositiveButton(getString(R.string.ver_ranking)) { _, _ ->
+            .setCancelable(false)
+
+        if (entro) {
+            builder.setPositiveButton(getString(R.string.ver_ranking)) { _, _ ->
                 startActivity(Intent(this, RankingActivity::class.java))
             }
-            .setNegativeButton(getString(R.string.volver_inicio)) { _, _ ->
+            builder.setNegativeButton(getString(R.string.compartir_puntaje)) { _, _ ->
+                compartirPuntaje(nombreUsuario, puntaje)
+            }
+            builder.setNeutralButton(getString(R.string.jugar_nuevamente)) { _, _ ->
+                reiniciar()
+            }
+        } else {
+            builder.setPositiveButton(getString(R.string.jugar_nuevamente)) { _, _ ->
+                reiniciar()
+            }
+            builder.setNegativeButton(getString(R.string.volver_inicio)) { _, _ ->
                 finish()
             }
-            .setCancelable(false)
-            .show()
+        }
+
+        builder.show()
+
     }
 
     private fun calcularPuntaje(): Int {
@@ -358,6 +381,7 @@ class MainActivity : AppCompatActivity() {
         val ranking = mutableListOf<Pair<String, Int>>()
 
         if (archivo.exists()) {
+            //archivo.delete() solo para resetear el ranking
             archivo.readLines().forEach {
                 val partes = it.split("::")
                 if (partes.size == 2) {
@@ -387,6 +411,17 @@ class MainActivity : AppCompatActivity() {
             temporizador.cancel()
         }
         super.onDestroy()
+    }
+
+    private fun compartirPuntaje(nombre: String, puntaje: Int) {
+        val mensaje = getString(R.string.mensaje_compartir, nombre, puntaje)
+        val intent = Intent();
+        intent.action = Intent.ACTION_SEND;
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, mensaje)
+        if(intent.resolveActivity(packageManager) != null){
+            startActivity(intent)
+        }
     }
 
 }

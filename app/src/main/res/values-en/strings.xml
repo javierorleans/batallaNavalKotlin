@@ -40,5 +40,8 @@
     <string name="dialog_tiempo_agotado_message">You lost the game!</string>
     <string name="jugar_nuevamente">Play again</string>
 
+    <string name="compartir_puntaje">Share score</string>
+    <string name="mensaje_compartir">🚢 %1$s scored %2$d points in Mini Battleship! Can you beat that?</string>
+    <string name="titulo_elegir_compartir">Share score via...</string>
 
 </resources>

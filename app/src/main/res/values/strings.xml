@@ -24,7 +24,7 @@
     <string name="tit_ayuda">AYUDA</string>
     <string name="textoAyuda">Batalla Naval es un juego por turnos donde el jugador debe encontrar y hundir barcos escondidos en un tablero. Cada turno consiste en seleccionar una celda. Si acierta, se marca como “tocado”; si no, como “agua”. El objetivo es hundir todos los barcos en la menor cantidad de intentos posibles.</string>
     <string name="volver">VOLVER</string>
-    
+
     <string name="mensaje_entro_ranking">🎉 ¡%1$s entró al ranking con %2$d puntos!</string>
     <string name="mensaje_no_entro_ranking">%1$s ganó con %2$d puntos, pero no entró al top 5.</string>
     <string name="no_jugadores_ranking">No hay jugadores disponibles</string>
@@ -40,5 +40,8 @@
     <string name="dialog_tiempo_agotado_message">¡Has perdido la partida!</string>
     <string name="jugar_nuevamente">Jugar nuevamente</string>
 
+    <string name="compartir_puntaje">Compartir puntaje</string>
+    <string name="mensaje_compartir">🚢 ¡%1$s logró %2$d puntos en Mini Batalla Naval! ¿Podés superarlo?</string>
+    <string name="titulo_elegir_compartir">Compartir puntaje con...</string>
 
 </resources>
