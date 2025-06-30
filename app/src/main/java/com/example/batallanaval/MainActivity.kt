@@ -284,8 +284,8 @@ class MainActivity : AppCompatActivity() {
     }
     private fun obtenerDuracionTimer(tamanio: String): Long {
         return when (tamanio) {
-            "6x6" -> 90_000L // 20 segundos CAMBIAR!
-            "8x8" -> 55_000L // 25 segundos CAMBIAR!
+            "6x6" -> 20_000L // 20 segundos 
+            "8x8" -> 25_000L // 25 segundos
             "10x10" -> 30_000L // 30 segundos
             else -> 20_000L // por defecto
         }
