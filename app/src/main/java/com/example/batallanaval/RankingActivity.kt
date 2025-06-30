@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
+import android.view.ViewGroup
 
 class RankingActivity : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ class RankingActivity : AppCompatActivity() {
 
     private fun mostrarRanking() {
         val archivo = File(filesDir, "ranking.txt")
-        val contenedor = findViewById<LinearLayout>(R.id.listaRanking)
+        val contenedor = findViewById<LinearLayout>(R.id.listaRanking) as ViewGroup;
         contenedor.removeAllViews() // Limpia por si se recarga
 
         if (archivo.exists()) {
@@ -52,7 +53,7 @@ class RankingActivity : AppCompatActivity() {
         }
     }
 
-    private fun agregarTexto (contenedor: LinearLayout, texto: String) {
+    private fun agregarTexto (contenedor: ViewGroup, texto: String) {
         val tv = TextView(this)
         tv.text = texto
         tv.textSize = 18f

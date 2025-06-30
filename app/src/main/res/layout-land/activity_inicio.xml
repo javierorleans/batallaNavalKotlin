@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="28dp"
+                android:layout_marginBottom="28dp"
                 android:text="@string/app_name"
                 android:textColor="@color/black"
                 android:textSize="40sp"/>
@@ -32,7 +33,6 @@
                 android:layout_below="@+id/titulo"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="8dp"
                 android:hint="@string/placeholder_inicio"
                 android:inputType="textPersonName" />
 
