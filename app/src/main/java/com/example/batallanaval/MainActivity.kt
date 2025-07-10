@@ -352,9 +352,11 @@ class MainActivity : AppCompatActivity() {
         if (entro) {
             builder.setPositiveButton(getString(R.string.ver_ranking)) { _, _ ->
                 startActivity(Intent(this, RankingActivity::class.java))
+                finish()
             }
             builder.setNegativeButton(getString(R.string.compartir_puntaje)) { _, _ ->
                 compartirPuntaje(nombreUsuario, puntaje)
+                finish()
             }
             builder.setNeutralButton(getString(R.string.jugar_nuevamente)) { _, _ ->
                 reiniciar()

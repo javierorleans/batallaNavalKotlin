@@ -20,8 +20,6 @@ class RankingActivity : AppCompatActivity() {
         btnVolverInicio = findViewById(R.id.btn_volverInicio)
 
         btnVolverInicio.setOnClickListener {
-            val i = Intent(this, InicioActivity::class.java)
-            startActivity(i)
             finish()
         }
 
